@@ -39,7 +39,7 @@ import static org.javapro.quizadmin.QuestionParser.parseQuestion;
  * @author RuslanLopez
  */
 public class QuizAdmin extends JFrame {
-    
+
     private List<Question> questions = new ArrayList<>();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -233,54 +233,23 @@ public class QuizAdmin extends JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    void loadQuestionsFromFile(String aFile) throws FileNotFoundException, IOException{
+    public void loadQuestionsFromFile(String aFile) throws FileNotFoundException, IOException{
         try(BufferedReader reader = new BufferedReader(new FileReader(new File(aFile)))){
             parseQuestions(reader);
         }
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QuizAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QuizAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QuizAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QuizAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new QuizAdmin().setVisible(true);
-        });
     }
 
     public void parseQuestions(BufferedReader reader) throws IOException {
         String thisLine;
         while ((thisLine = reader.readLine()) != null) {
-            questions=parseQuestion(thisLine);
+            questions.add(parseQuestion(thisLine));
         }
         Question primeraPregunta = questions.get(0);
         System.out.println("Pintando primera pregunta:"+primeraPregunta);
         txtEnunciado.setText(primeraPregunta.getText());
+        //cmbTipoPregunta.setSelectedIndex();
+        // agregar respuesta en pnlOpcionesRespuesta
     }
-    
+
 
 }
