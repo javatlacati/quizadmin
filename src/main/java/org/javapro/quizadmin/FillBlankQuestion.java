@@ -20,16 +20,21 @@ package org.javapro.quizadmin;
  *
  * @author Ruslan Lopez Carrro <scherzo_16 at hotmail.com>
  */
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Setter
+@Getter
 public class FillBlankQuestion extends Question {
 
     private final List<String> correctAnswers;
 
     public FillBlankQuestion(final String vettedness) {
-        super(vettedness);
+        super(vettedness, QuestionType.FILL_IN_THE_BLANKS);
         correctAnswers = new ArrayList<>(1);
     }
 

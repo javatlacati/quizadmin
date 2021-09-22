@@ -35,7 +35,12 @@ public class MultipleChoiceQuestion extends Question {
      * Constructs a multiple choice question with no choices.
      */
     public MultipleChoiceQuestion(String vettedness) {
-        super(vettedness);
+        super(vettedness, QuestionType.MULTIPLE_OPTION);
+        choices = new ArrayList<>(2);
+    }
+
+    public MultipleChoiceQuestion(String vettedness, QuestionType type) {
+        super(vettedness, type);
         choices = new ArrayList<>(2);
     }
 

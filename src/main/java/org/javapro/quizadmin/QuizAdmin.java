@@ -132,8 +132,6 @@ public class QuizAdmin extends JFrame {
 
         lblEnunciado.setText(bundle.getString("QuizAdmin.lblEnunciado.text")); // NOI18N
         pnlenunciadoPregunta.add(lblEnunciado);
-
-        txtEnunciado.setEditable(false);
         pnlenunciadoPregunta.add(txtEnunciado);
 
         lblTipoPregunta.setText(bundle.getString("QuizAdmin.lblTipoPregunta.text")); // NOI18N
@@ -247,7 +245,8 @@ public class QuizAdmin extends JFrame {
         Question primeraPregunta = questions.get(0);
         System.out.println("Pintando primera pregunta:"+primeraPregunta);
         txtEnunciado.setText(primeraPregunta.getText());
-        //cmbTipoPregunta.setSelectedIndex();
+        QuestionType preguntaType = primeraPregunta.getType();
+        cmbTipoPregunta.setSelectedIndex(preguntaType.ordinal());
         // agregar respuesta en pnlOpcionesRespuesta
     }
 
