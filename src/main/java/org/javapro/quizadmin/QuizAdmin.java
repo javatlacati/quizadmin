@@ -18,6 +18,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -45,8 +46,10 @@ public class QuizAdmin extends JFrame {
     JButton agregarOpcion;
     JButton btnAgregarPregunta;
     JButton btnAnterior;
+    JComboBox<String> btnIrAUnaEspecífica;
     JButton btnQuitarPregunta;
     JButton btnSiguente;
+    JComboBox<String> cmbTipoPregunta;
     JLabel lblEnunciado;
     JLabel lblOpciones;
     JLabel lblRespuesta;
@@ -93,7 +96,7 @@ public class QuizAdmin extends JFrame {
         lblEnunciado = new JLabel();
         txtEnunciado = new JTextField();
         lblTipoPregunta = new JLabel();
-        JComboBox<String> cmbTipoPregunta = new JComboBox<>();
+        cmbTipoPregunta = new JComboBox<>();
         opcionespnl = new JPanel();
         lblOpciones = new JLabel();
         //lblOpciones.setVisible(false);
@@ -117,22 +120,23 @@ public class QuizAdmin extends JFrame {
         pnlQuestionNavigation = new JPanel();
         btnAnterior = new JButton();
         btnSiguente = new JButton();
-        JComboBox<String> btnIrAUnaEspecífica = new JComboBox<>();
+        btnIrAUnaEspecífica = new JComboBox<>();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        pnlDatosPregunta.setBorder(BorderFactory.createTitledBorder("Datos de pregunta"));
+        ResourceBundle bundle = ResourceBundle.getBundle("org/javapro/quizadmin/Bundle"); // NOI18N
+        pnlDatosPregunta.setBorder(BorderFactory.createTitledBorder(bundle.getString("QuizAdmin.pnlDatosPregunta.border.title"))); // NOI18N
         pnlDatosPregunta.setLayout(new BoxLayout(pnlDatosPregunta, BoxLayout.Y_AXIS));
 
         pnlenunciadoPregunta.setLayout(new GridLayout(0, 2));
 
-        lblEnunciado.setText("Enunciado");
+        lblEnunciado.setText(bundle.getString("QuizAdmin.lblEnunciado.text")); // NOI18N
         pnlenunciadoPregunta.add(lblEnunciado);
 
         txtEnunciado.setEditable(false);
         pnlenunciadoPregunta.add(txtEnunciado);
 
-        lblTipoPregunta.setText("tipo de pregunta:");
+        lblTipoPregunta.setText(bundle.getString("QuizAdmin.lblTipoPregunta.text")); // NOI18N
         pnlenunciadoPregunta.add(lblTipoPregunta);
 
         cmbTipoPregunta.setModel(new DefaultComboBoxModel<>(new String[] { "Llenar el espacio en blanco", "Opción Múltiple", "Respuesta Múltiple" }));
@@ -142,7 +146,7 @@ public class QuizAdmin extends JFrame {
 
         opcionespnl.setLayout(new BoxLayout(opcionespnl, BoxLayout.LINE_AXIS));
 
-        lblOpciones.setText("opciones");
+        lblOpciones.setText(bundle.getString("QuizAdmin.lblOpciones.text")); // NOI18N
         opcionespnl.add(lblOpciones);
 
         pnlOpciones.setLayout(new GridBagLayout());
@@ -155,11 +159,11 @@ public class QuizAdmin extends JFrame {
 
         pnleditarOpciones.setLayout(new BoxLayout(pnleditarOpciones, BoxLayout.Y_AXIS));
 
-        agregarOpcion.setText("+");
+        agregarOpcion.setText(bundle.getString("QuizAdmin.agregarOpcion.text")); // NOI18N
         agregarOpcion.setEnabled(false);
         pnleditarOpciones.add(agregarOpcion);
 
-        quitarOpcion.setText("-");
+        quitarOpcion.setText(bundle.getString("QuizAdmin.quitarOpcion.text")); // NOI18N
         quitarOpcion.setEnabled(false);
         pnleditarOpciones.add(quitarOpcion);
 
@@ -171,7 +175,7 @@ public class QuizAdmin extends JFrame {
 
         respuestapnl.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        lblRespuesta.setText("respuesta");
+        lblRespuesta.setText(bundle.getString("QuizAdmin.lblRespuesta.text")); // NOI18N
         respuestapnl.add(lblRespuesta);
 
         pnlRespuesta.setMinimumSize(new Dimension(100, 90));
@@ -191,17 +195,17 @@ public class QuizAdmin extends JFrame {
 
         getContentPane().add(pnlDatosPregunta, BorderLayout.CENTER);
 
-        pnlControles.setBorder(BorderFactory.createTitledBorder("Controles"));
+        pnlControles.setBorder(BorderFactory.createTitledBorder(bundle.getString("QuizAdmin.pnlControles.border.title"))); // NOI18N
         pnlControles.setLayout(new BorderLayout());
 
         pnlQuestionCreationDeletion.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         pnlQuestionCreationDeletion.setLayout(new BorderLayout());
 
-        btnQuitarPregunta.setText("-");
+        btnQuitarPregunta.setText(bundle.getString("QuizAdmin.btnQuitarPregunta.text")); // NOI18N
         btnQuitarPregunta.setEnabled(false);
         pnlQuestionCreationDeletion.add(btnQuitarPregunta, BorderLayout.EAST);
 
-        btnAgregarPregunta.setText("+");
+        btnAgregarPregunta.setText(bundle.getString("QuizAdmin.btnAgregarPregunta.text")); // NOI18N
         btnAgregarPregunta.setEnabled(false);
         pnlQuestionCreationDeletion.add(btnAgregarPregunta, BorderLayout.WEST);
 
@@ -210,11 +214,11 @@ public class QuizAdmin extends JFrame {
         pnlQuestionNavigation.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         pnlQuestionNavigation.setLayout(new BorderLayout());
 
-        btnAnterior.setText("<");
+        btnAnterior.setText(bundle.getString("QuizAdmin.btnAnterior.text")); // NOI18N
         btnAnterior.setEnabled(false);
         pnlQuestionNavigation.add(btnAnterior, BorderLayout.WEST);
 
-        btnSiguente.setText(">");
+        btnSiguente.setText(bundle.getString("QuizAdmin.btnSiguente.text")); // NOI18N
         btnSiguente.setEnabled(false);
         pnlQuestionNavigation.add(btnSiguente, BorderLayout.EAST);
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="optionButtonsGroup">
     </Component>
@@ -13,11 +13,11 @@
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
-    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="1"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="2"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
@@ -31,7 +31,9 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Datos de pregunta"/>
+            <TitledBorder title="Datos de pregunta">
+              <ResourceString PropertyName="titleX" bundle="org/javapro/quizadmin/Bundle.properties" key="QuizAdmin.pnlDatosPregunta.border.title" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </TitledBorder>
           </Border>
         </Property>
       </Properties>
@@ -54,7 +56,9 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="lblEnunciado">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Enunciado"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/javapro/quizadmin/Bundle.properties" key="QuizAdmin.lblEnunciado.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtEnunciado">
@@ -64,7 +68,9 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lblTipoPregunta">
               <Properties>
-                <Property name="text" type="java.lang.String" value="tipo de pregunta:"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/javapro/quizadmin/Bundle.properties" key="QuizAdmin.lblTipoPregunta.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbTipoPregunta">
@@ -89,7 +95,9 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="lblOpciones">
               <Properties>
-                <Property name="text" type="java.lang.String" value="opciones"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/javapro/quizadmin/Bundle.properties" key="QuizAdmin.lblOpciones.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="//lblOpciones.setVisible(false);&#xd;&#xa;//lblOpciones.setBounds(0, 0, 0, 0);&#xd;&#xa;"/>
@@ -129,13 +137,17 @@
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="agregarOpcion">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="+"/>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/javapro/quizadmin/Bundle.properties" key="QuizAdmin.agregarOpcion.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="quitarOpcion">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="-"/>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/javapro/quizadmin/Bundle.properties" key="QuizAdmin.quitarOpcion.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
@@ -153,7 +165,9 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="lblRespuesta">
               <Properties>
-                <Property name="text" type="java.lang.String" value="respuesta"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/javapro/quizadmin/Bundle.properties" key="QuizAdmin.lblRespuesta.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
             </Component>
             <Container class="javax.swing.JPanel" name="pnlRespuesta">
@@ -199,7 +213,9 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Controles"/>
+            <TitledBorder title="Controles">
+              <ResourceString PropertyName="titleX" bundle="org/javapro/quizadmin/Bundle.properties" key="QuizAdmin.pnlControles.border.title" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </TitledBorder>
           </Border>
         </Property>
       </Properties>
@@ -229,7 +245,9 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btnQuitarPregunta">
               <Properties>
-                <Property name="text" type="java.lang.String" value="-"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/javapro/quizadmin/Bundle.properties" key="QuizAdmin.btnQuitarPregunta.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Constraints>
@@ -240,7 +258,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnAgregarPregunta">
               <Properties>
-                <Property name="text" type="java.lang.String" value="+"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/javapro/quizadmin/Bundle.properties" key="QuizAdmin.btnAgregarPregunta.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Constraints>
@@ -269,7 +289,9 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btnAnterior">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/javapro/quizadmin/Bundle.properties" key="QuizAdmin.btnAnterior.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Constraints>
@@ -280,7 +302,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnSiguente">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&gt;"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/javapro/quizadmin/Bundle.properties" key="QuizAdmin.btnSiguente.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Constraints>
