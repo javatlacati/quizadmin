@@ -17,10 +17,8 @@
 package org.javapro.quizadmin;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import static java.util.ResourceBundle.getBundle;
 import java.util.regex.Pattern;
@@ -39,8 +37,8 @@ public class QuestionParser {
     /**
      * @param questionString the question fields split by @@
      */
-    public static List<Question> parseQuestion(final String questionString) {
-        List<Question> questions = new ArrayList<>();
+    public static Question parseQuestion(final String questionString) {
+        Question question;
         final String[] questarray = SEPARATE_BY_DIVIDER_PATTERN.split(questionString);
         String tipoPregunta = questarray[0];
         String vettedness = "v".equals(questarray[1]) ? Question.VETTED : Question.TRIAL;
@@ -53,33 +51,33 @@ public class QuestionParser {
                 //multiple choice
                 int correctAnswerIdx = Integer.parseInt(questarray[6]);
                 String[] answersTexts = Arrays.copyOfRange(questarray, 7, questarray.length);
-                addMultipleChoiceQuestion(questions, vettedness, explanation,
+                question=addMultipleChoiceQuestion(vettedness, explanation,
                         questionText, correctAnswerIdx, category, difficulty, answersTexts);
                 break;
             }
             case "FB": {
                 //fill in the blanks
                 String[] blanks = Arrays.copyOfRange(questarray, 6, questarray.length);
-                addFillBlankQuestion(questions, vettedness, explanation, questionText, category, difficulty, blanks);
+                question=addFillBlankQuestion( vettedness, explanation, questionText, category, difficulty, blanks);
                 break;
             }
             case "MA": {
                 Map<String, Boolean> choices = parseChoicesMap(Arrays.copyOfRange(questarray, 6, questarray.length));
-                addMultipleAnswerQuestion(questions, vettedness, explanation, questionText,
+                question=addMultipleAnswerQuestion(vettedness, explanation, questionText,
                         category, difficulty, choices);
                 break;
             }
             default:
                 System.err.println(MessageFormat.format(getBundle("quiz/resources/quiz").getString("QUESTION_TYPE_ERR"), new Object[]{}));
-                break;
+                return null;
         }
-        return questions;
+        return question;
     }
 
     /**
      * Adds a new multiple choice question to the specified question list.
      */
-    private static void addMultipleChoiceQuestion(final List<Question> questions,
+    private static Question addMultipleChoiceQuestion(
             final String vettedness, final String explanation, final String questionText, final int correctAnswerIdx,
             final String category,
             final String difficulty,
@@ -93,32 +91,30 @@ public class QuestionParser {
             final String answerText = answersTexts[i];
             choiceQuestion.setChoice(answerText, i == correctAnswerIdx);
         }
-        questions.add(choiceQuestion);
+        return choiceQuestion;
     }
 
     /**
      *
      */
-    private static void addMultipleAnswerQuestion(final List<Question> questions,
-            final String vettedness, final String explanation, final String questionText,
-            final String category, final String difficulty,
-            final Map<String, Boolean> answerChoicesMap) {
+    private static Question addMultipleAnswerQuestion(final String vettedness, final String explanation, final String questionText,
+                                                      final String category, final String difficulty,
+                                                      final Map<String, Boolean> answerChoicesMap) {
         final MultipleAnswerQuestion choiceQuestion = new MultipleAnswerQuestion(vettedness);
         choiceQuestion.setExplanation(explanation);
         choiceQuestion.setText(questionText);
         choiceQuestion.setCategory(category);
         choiceQuestion.setDifficulty(str2difficulty(difficulty));
         answerChoicesMap.forEach(choiceQuestion::setChoice);
-        questions.add(choiceQuestion);
+        return choiceQuestion;
     }
 
     /**
      *
      */
-    private static void addFillBlankQuestion(final List<Question> questions,
-            final String vettedness, final String explanation, final String questionText,
-            final String category, final String difficulty,
-            final String... blanks) {
+    private static Question addFillBlankQuestion(final String vettedness, final String explanation, final String questionText,
+                                                 final String category, final String difficulty,
+                                                 final String... blanks) {
         final FillBlankQuestion fillBlankQuestion = new FillBlankQuestion(vettedness);
         fillBlankQuestion.setExplanation(explanation);
         fillBlankQuestion.setText(questionText);
@@ -127,7 +123,7 @@ public class QuestionParser {
         for (final String blank : blanks) {
             fillBlankQuestion.setAnswer(blank);
         }
-        questions.add(fillBlankQuestion);
+        return fillBlankQuestion;
     }
 
     /**
