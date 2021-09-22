@@ -245,7 +245,8 @@ public class QuizAdmin extends JFrame {
         Question primeraPregunta = questions.get(0);
         System.out.println("Pintando primera pregunta:"+primeraPregunta);
         txtEnunciado.setText(primeraPregunta.getText());
-        //cmbTipoPregunta.setSelectedIndex();
+        QuestionType preguntaType = primeraPregunta.getType();
+        cmbTipoPregunta.setSelectedIndex(preguntaType.ordinal());
         // agregar respuesta en pnlOpcionesRespuesta
     }
 

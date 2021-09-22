@@ -20,11 +20,19 @@ package org.javapro.quizadmin;
  *
  * @author Ruslan Lopez Carrro <scherzo_16 at hotmail.com>
  */
+
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @author NicolasADavid
  * @author Javatlacati
  */
+@Setter
+@Getter
 abstract public class Question {
+
+    private QuestionType type;
 
     public static final String VETTED = "vetted";
     public static final String TRIAL = "trial";
@@ -42,12 +50,13 @@ abstract public class Question {
      *
      * @param vettedness
      */
-    public Question(final String vettedness) {
+    public Question(final String vettedness, QuestionType questionType) {
 //        text = "";//only necessary for Java 5 where default value for String variable at class scope was null instead of ""
 //        answer = "";
         vettedOrTrial = vettedness;
         category = "default";
         difficulty = Difficulty.NORMAL;
+        type=questionType;
     }
 
     /**
@@ -126,30 +135,10 @@ abstract public class Question {
      */
     abstract double getMaxPoints();
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public String getText() {
-        return text;
-    }
-
     @Override
     public String toString() {
         return "Question{" + "text=" + text + ", answer=" + answer + ", explanation=" + explanation + ", userAnswer=" + userAnswer + ", vettedOrTrial=" + vettedOrTrial + ", category=" + category + ", difficulty=" + difficulty + '}';
     }
-    
-    
+
+
 }

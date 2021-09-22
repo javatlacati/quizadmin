@@ -33,7 +33,7 @@ public class MultipleAnswerQuestion extends MultipleChoiceQuestion {
      * Constructs a choice question with no choices.
      */
     public MultipleAnswerQuestion(String vettedness) {
-        super(vettedness);
+        super(vettedness, QuestionType.MULTIPLE_ANSWER);
         choices = new ArrayList<>(2);
         correctAnswers = new ArrayList<>(1);
     }
