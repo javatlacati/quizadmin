@@ -23,7 +23,9 @@ package org.javapro.quizadmin;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import lombok.Getter;
 
+@Getter
 public class MultipleAnswerQuestion extends MultipleChoiceQuestion {
 
     private final ArrayList<String> choices;

@@ -11,23 +11,29 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -38,9 +44,10 @@ import static org.javapro.quizadmin.QuestionParser.parseQuestion;
  *
  * @author RuslanLopez
  */
-public class QuizAdmin extends JFrame {
+public class QuizAdmin extends JFrame implements ActionListener {
 
     private List<Question> questions = new ArrayList<>();
+    private Optional<Question> preguntaActual;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     JButton agregarOpcion;
@@ -50,6 +57,7 @@ public class QuizAdmin extends JFrame {
     JButton btnQuitarPregunta;
     JButton btnSiguente;
     JComboBox<String> cmbTipoPregunta;
+    JPanel jPanel1;
     JLabel lblEnunciado;
     JLabel lblOpciones;
     JLabel lblRespuesta;
@@ -105,6 +113,7 @@ public class QuizAdmin extends JFrame {
         //pnlOpciones.setVisible(false);
         //lblOpciones.setBounds(0, 0, 0, 0);
         pnlOpcionesRespuesta = new JScrollPane();
+        jPanel1 = new JPanel();
         pnleditarOpciones = new JPanel();
         agregarOpcion = new JButton();
         quitarOpcion = new JButton();
@@ -150,6 +159,10 @@ public class QuizAdmin extends JFrame {
         pnlOpciones.setLayout(new GridBagLayout());
 
         pnlOpcionesRespuesta.setMinimumSize(new Dimension(125, 125));
+
+        jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.Y_AXIS));
+        pnlOpcionesRespuesta.setViewportView(jPanel1);
+
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = GridBagConstraints.BOTH;
@@ -201,10 +214,12 @@ public class QuizAdmin extends JFrame {
 
         btnQuitarPregunta.setText(bundle.getString("QuizAdmin.btnQuitarPregunta.text")); // NOI18N
         btnQuitarPregunta.setEnabled(false);
+        btnQuitarPregunta.addActionListener(this);
         pnlQuestionCreationDeletion.add(btnQuitarPregunta, BorderLayout.EAST);
 
         btnAgregarPregunta.setText(bundle.getString("QuizAdmin.btnAgregarPregunta.text")); // NOI18N
         btnAgregarPregunta.setEnabled(false);
+        btnAgregarPregunta.addActionListener(this);
         pnlQuestionCreationDeletion.add(btnAgregarPregunta, BorderLayout.WEST);
 
         pnlControles.add(pnlQuestionCreationDeletion, BorderLayout.NORTH);
@@ -214,10 +229,12 @@ public class QuizAdmin extends JFrame {
 
         btnAnterior.setText(bundle.getString("QuizAdmin.btnAnterior.text")); // NOI18N
         btnAnterior.setEnabled(false);
+        btnAnterior.addActionListener(this);
         pnlQuestionNavigation.add(btnAnterior, BorderLayout.WEST);
 
         btnSiguente.setText(bundle.getString("QuizAdmin.btnSiguente.text")); // NOI18N
         btnSiguente.setEnabled(false);
+        btnSiguente.addActionListener(this);
         pnlQuestionNavigation.add(btnSiguente, BorderLayout.EAST);
 
         btnIrAUnaEspecífica.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
@@ -229,7 +246,42 @@ public class QuizAdmin extends JFrame {
         getContentPane().add(pnlControles, BorderLayout.PAGE_END);
 
         pack();
+    }
+
+    // Code for dispatching events from components to event handlers.
+
+    public void actionPerformed(ActionEvent evt) {
+        if (evt.getSource() == btnSiguente) {
+            QuizAdmin.this.btnSiguenteActionPerformed(evt);
+        }
+        else if (evt.getSource() == btnAgregarPregunta) {
+            QuizAdmin.this.btnAgregarPreguntaActionPerformed(evt);
+        }
+        else if (evt.getSource() == btnAnterior) {
+            QuizAdmin.this.btnAnteriorActionPerformed(evt);
+        }
+        else if (evt.getSource() == btnQuitarPregunta) {
+            QuizAdmin.this.btnQuitarPreguntaActionPerformed(evt);
+        }
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSiguenteActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnSiguenteActionPerformed
+        // TODO pasar al siguiente elemento de las opciones de respuesta
+        pintaPreguntaActual();
+    }//GEN-LAST:event_btnSiguenteActionPerformed
+
+    private void btnAgregarPreguntaActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnAgregarPreguntaActionPerformed
+        //TODO mostrar un dialogo para preguntar el tipo de pregunta a agregar
+    }//GEN-LAST:event_btnAgregarPreguntaActionPerformed
+
+    private void btnAnteriorActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+        // TODO pasar al anterior elemento de las opciones de respuesta
+        pintaPreguntaActual();
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+
+    private void btnQuitarPreguntaActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnQuitarPreguntaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnQuitarPreguntaActionPerformed
 
     public void loadQuestionsFromFile(String aFile) throws FileNotFoundException, IOException{
         try(BufferedReader reader = new BufferedReader(new FileReader(new File(aFile)))){
@@ -242,28 +294,64 @@ public class QuizAdmin extends JFrame {
         while ((thisLine = reader.readLine()) != null) {
             questions.add(parseQuestion(thisLine));
         }
-        Question primeraPregunta = questions.get(0);
-        System.out.println("Pintando primera pregunta:"+primeraPregunta);
-        txtEnunciado.setText(primeraPregunta.getText());
-        QuestionType preguntaType = primeraPregunta.getType();
-        cmbTipoPregunta.setSelectedIndex(preguntaType.ordinal());
-        switch (preguntaType){
-            case FILL_IN_THE_BLANKS:
-                FillBlankQuestion fb = (FillBlankQuestion) primeraPregunta;
-                txtRespuesta.setText(fb.getAnswer());
-                //TODO ocultar panel de opción
-                break;
-            case MULTIPLE_OPTION:
-                MultipleChoiceQuestion mc = (MultipleChoiceQuestion) primeraPregunta;
-                //TODO ocultar panel de respuesta
-                break;
-            case MULTIPLE_ANSWER:
-                MultipleAnswerQuestion ma = (MultipleAnswerQuestion) primeraPregunta;
-                //TODO ocultar panel de respuesta
-                break;
-            default:
-                System.err.println("unexpected question type");
+        if(questions.size()>1){
+           btnSiguente.setEnabled(true);
         }
+        preguntaActual = Optional.of(questions.get(0));
+        pintaPreguntaActual();
+    }
+
+    private void pintaPreguntaActual() {
+        System.out.println("Pintando primera pregunta:"+preguntaActual);
+        preguntaActual.ifPresent(pregunta->{
+            txtEnunciado.setText(pregunta.getText());
+            QuestionType preguntaType = pregunta.getType();
+            cmbTipoPregunta.setSelectedIndex(preguntaType.ordinal());
+            switch (preguntaType) {
+                case FILL_IN_THE_BLANKS:
+                    FillBlankQuestion fb = (FillBlankQuestion) pregunta;
+                    agregarOpcion.setEnabled(false);
+                    quitarOpcion.setEnabled(false);
+                    txtRespuesta.setText(fb.getAnswer());
+                    //TODO ocultar panel de opción
+                    break;
+                case MULTIPLE_OPTION:
+                    eliminaOpcionesDeRespuestaPrevias();
+                    agregarOpcion.setEnabled(true);
+                    quitarOpcion.setEnabled(true);
+                    MultipleChoiceQuestion mc = (MultipleChoiceQuestion) pregunta;
+                    mc.getChoices()
+                            .stream()
+                            .forEachOrdered((option) -> {
+                                final JRadioButton jRadioButton = new JRadioButton(option);
+                                optionButtonsGroup.add(jRadioButton);
+                                jPanel1.add(jRadioButton);
+                            });
+
+                    //TODO ocultar panel de respuesta
+                    break;
+                case MULTIPLE_ANSWER:
+                    MultipleAnswerQuestion ma = (MultipleAnswerQuestion) pregunta;
+                    eliminaOpcionesDeRespuestaPrevias();
+                    agregarOpcion.setEnabled(true);
+                    quitarOpcion.setEnabled(true);
+                    ma.getChoices()
+                            .stream()
+                            .forEachOrdered(check -> {
+                                final JCheckBox jCheckBox = new JCheckBox(check);
+                                optionButtonsGroup.add(jCheckBox);
+                                jPanel1.add(jCheckBox);
+                            });
+                    //TODO ocultar panel de respuesta
+                    break;
+                default:
+                    System.err.println("unexpected question type");
+            }
+        });
+    }
+
+    private void eliminaOpcionesDeRespuestaPrevias() {
+        Collections.list(optionButtonsGroup.getElements()).stream().forEach(optionButtonsGroup::remove);
     }
 
 
