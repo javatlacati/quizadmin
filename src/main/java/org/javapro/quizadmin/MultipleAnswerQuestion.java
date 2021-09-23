@@ -23,9 +23,11 @@ package org.javapro.quizadmin;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class MultipleAnswerQuestion extends MultipleChoiceQuestion {
 
     private final ArrayList<String> choices;
@@ -33,6 +35,7 @@ public class MultipleAnswerQuestion extends MultipleChoiceQuestion {
 
     /**
      * Constructs a choice question with no choices.
+     * @param vettedness
      */
     public MultipleAnswerQuestion(String vettedness) {
         super(vettedness, QuestionType.MULTIPLE_ANSWER);
@@ -46,6 +49,7 @@ public class MultipleAnswerQuestion extends MultipleChoiceQuestion {
      * @param choice the choice to add
      * @param correct true if this is the correct choice, false otherwise
      */
+    @Override
     public void setChoice(String choice, boolean correct) {
         choices.add(choice);
         if (correct) {

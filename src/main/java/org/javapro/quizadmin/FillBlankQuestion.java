@@ -20,15 +20,16 @@ package org.javapro.quizadmin;
  *
  * @author Ruslan Lopez Carrro <scherzo_16 at hotmail.com>
  */
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @Setter
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class FillBlankQuestion extends Question {
 
     private final List<String> correctAnswers;

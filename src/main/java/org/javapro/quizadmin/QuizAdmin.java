@@ -37,6 +37,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import static org.javapro.quizadmin.QuestionParser.parseQuestion;
 
@@ -281,6 +282,21 @@ public class QuizAdmin extends JFrame implements ActionListener {
 
     private void btnQuitarPreguntaActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnQuitarPreguntaActionPerformed
         // TODO add your handling code here:
+        preguntaActual.ifPresent((actual)->{
+            int currentIndex = questions.indexOf(actual);
+            final int size = questions.size();
+
+            if (size == 1) {
+                questions.remove(actual);
+                //preguntaActual.ifPresent(questions::remove);
+                preguntaActual = Optional.empty();
+            } else {
+                questions.remove(actual);
+                //preguntaActual.ifPresent(questions::remove);
+                preguntaActual = Optional.of(questions.get(currentIndex == 0 ? 1 : currentIndex - 1));
+            }
+            pintaPreguntaActual();
+        });
     }//GEN-LAST:event_btnQuitarPreguntaActionPerformed
 
     public void loadQuestionsFromFile(String aFile) throws FileNotFoundException, IOException{
@@ -302,7 +318,9 @@ public class QuizAdmin extends JFrame implements ActionListener {
     }
 
     private void pintaPreguntaActual() {
-        System.out.println("Pintando primera pregunta:"+preguntaActual);
+        System.out.println("Pintando pregunta actual:"+preguntaActual);
+        btnQuitarPregunta.setEnabled(!questions.isEmpty());
+        
         preguntaActual.ifPresent(pregunta->{
             txtEnunciado.setText(pregunta.getText());
             QuestionType preguntaType = pregunta.getType();
@@ -310,9 +328,15 @@ public class QuizAdmin extends JFrame implements ActionListener {
             switch (preguntaType) {
                 case FILL_IN_THE_BLANKS:
                     FillBlankQuestion fb = (FillBlankQuestion) pregunta;
-                    agregarOpcion.setEnabled(false);
-                    quitarOpcion.setEnabled(false);
-                    txtRespuesta.setText(fb.getAnswer());
+                    SwingUtilities.invokeLater(() -> {
+                        eliminaOpcionesDeRespuestaPrevias();
+                        agregarOpcion.setEnabled(false);
+                        quitarOpcion.setEnabled(false);
+                        txtRespuesta.setText(fb.getAnswer());
+                        pnlOpciones.revalidate();
+                        pnlOpciones.repaint();
+                    });
+                    
                     //TODO ocultar panel de opción
                     break;
                 case MULTIPLE_OPTION:
@@ -320,6 +344,7 @@ public class QuizAdmin extends JFrame implements ActionListener {
                     agregarOpcion.setEnabled(true);
                     quitarOpcion.setEnabled(true);
                     MultipleChoiceQuestion mc = (MultipleChoiceQuestion) pregunta;
+                    SwingUtilities.invokeLater(() -> {
                     mc.getChoices()
                             .stream()
                             .forEachOrdered((option) -> {
@@ -327,11 +352,16 @@ public class QuizAdmin extends JFrame implements ActionListener {
                                 optionButtonsGroup.add(jRadioButton);
                                 jPanel1.add(jRadioButton);
                             });
+                        pnlOpciones.revalidate();
+                        pnlOpciones.repaint();
+                    });
 
                     //TODO ocultar panel de respuesta
+                    //TODO preseleccionar la opción de respuesta correcta
                     break;
                 case MULTIPLE_ANSWER:
                     MultipleAnswerQuestion ma = (MultipleAnswerQuestion) pregunta;
+                    SwingUtilities.invokeLater(() -> {
                     eliminaOpcionesDeRespuestaPrevias();
                     agregarOpcion.setEnabled(true);
                     quitarOpcion.setEnabled(true);
@@ -342,16 +372,22 @@ public class QuizAdmin extends JFrame implements ActionListener {
                                 optionButtonsGroup.add(jCheckBox);
                                 jPanel1.add(jCheckBox);
                             });
+                        pnlOpciones.revalidate();
+                        pnlOpciones.repaint();
+                    });
                     //TODO ocultar panel de respuesta
+                    //TODO preseleccionar las opciones de respuesta correcta
                     break;
                 default:
                     System.err.println("unexpected question type");
             }
         });
+        
     }
 
     private void eliminaOpcionesDeRespuestaPrevias() {
         Collections.list(optionButtonsGroup.getElements()).stream().forEach(optionButtonsGroup::remove);
+        jPanel1.removeAll();
     }
 
 

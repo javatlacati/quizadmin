@@ -22,12 +22,14 @@ package org.javapro.quizadmin;
  */
 import java.util.ArrayList;
 import java.util.regex.Pattern;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
  * A question with multiple choices.
  */
 @Getter
+@EqualsAndHashCode(callSuper = true)
 public class MultipleChoiceQuestion extends Question {
 
     private static final Pattern BLANKS = Pattern.compile("\\s+");
