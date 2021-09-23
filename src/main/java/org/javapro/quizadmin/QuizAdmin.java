@@ -247,7 +247,23 @@ public class QuizAdmin extends JFrame {
         txtEnunciado.setText(primeraPregunta.getText());
         QuestionType preguntaType = primeraPregunta.getType();
         cmbTipoPregunta.setSelectedIndex(preguntaType.ordinal());
-        // agregar respuesta en pnlOpcionesRespuesta
+        switch (preguntaType){
+            case FILL_IN_THE_BLANKS:
+                FillBlankQuestion fb = (FillBlankQuestion) primeraPregunta;
+                txtRespuesta.setText(fb.getAnswer());
+                //TODO ocultar panel de opción
+                break;
+            case MULTIPLE_OPTION:
+                MultipleChoiceQuestion mc = (MultipleChoiceQuestion) primeraPregunta;
+                //TODO ocultar panel de respuesta
+                break;
+            case MULTIPLE_ANSWER:
+                MultipleAnswerQuestion ma = (MultipleAnswerQuestion) primeraPregunta;
+                //TODO ocultar panel de respuesta
+                break;
+            default:
+                System.err.println("unexpected question type");
+        }
     }
 
 
