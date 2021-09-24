@@ -28,12 +28,20 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JFrame;
 
 /**
  *
  * @author Ruslan Lopez Carro
  */
-public class Adminstarter {
+public class Adminstarter extends JFrame{
+
+    public Adminstarter(){
+        super("Quiz Admin");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
     public static void main(String[] args) throws FileNotFoundException, IOException {
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -45,6 +53,10 @@ public class Adminstarter {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(QuizAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    Adminstarter mainWindow = new Adminstarter();
+    mainWindow.setVisible(true);
+
         QuizAdmin admin = new QuizAdmin();
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
